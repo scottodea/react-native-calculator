@@ -1,0 +1,3 @@
+rootProject.name = 'prime_components'
+
+include ':app'
