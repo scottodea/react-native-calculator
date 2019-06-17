@@ -1,9 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
 
-/* https://kylewbanks.com/blog/react-native-tutorial-part-2-designing-a-calculator */
-
-/* https://github.com/styled-components/styled-components/issues/149 */
 const ButtonBox = styled.TouchableHighlight.attrs({
   underlayColor: "#193441"
 })`
