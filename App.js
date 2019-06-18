@@ -10,45 +10,40 @@ import {
 
 class App extends React.Component {
   state = {
-    number: 0,
-    numbers: [],
     processing: false,
     running: false,
-    operator: '',
     screen: 0,
-    answer: null
+    answer: null,
+    string: ""
   };
 
-  calculate = (operator, numbers) => {
-    numbers_to_i = numbers.map(num => +num)
-    let answer = numbers_to_i.reduce((acc, cv) => acc + cv);
-    return answer
-  }
-
   press = (value) => {
-    let { numbers, screen, operator, answer } = this.state;
+    let { screen, answer } = this.state;
+    const { string, numbers } = this.state;
     if (value === 'Clear') {
       screen = 0;
-      this.setState({ screen });
-    } else if (value === 'Go' && operator !== '') {
-      numbers.push(screen);
-      this.setState({ running: false, processing: true, answer: this.calculate(operator, numbers) });
+      this.setState({ screen, string: "" });
+    } else if (value === 'Go') {
+      answer = eval(string);
+      this.setState({ numbers, running: false, processing: true, answer });
     } else if (value === 'Back') {
-      this.setState({ screen: 0, numbers: [], answer: null, operator: '', processing: false });
+      this.setState({ screen: 0, numbers: [], string: '', processing: false, answer: null });
     }
-    else if (value === '+') {
-      numbers.push(screen);
-      this.setState({ numbers, screen: 0, operator: '+' });
+    else if (value.includes('+') || value.includes('-') || value.includes('*') || value.includes('/')) {
+      if (string) {
+        return this.setState({ string: `${string} ${value}`, screen: 0 })
+      }
+      this.setState({ string: `${value} ${string}`, screen: 0 });
     }
     else {
       if (screen === 0) screen = value;
       else screen += value;
-      this.setState({ screen });
+      this.setState({ screen, string: string + value });
     }
   };
 
   render() {
-    const { processing, running, operator, screen, answer } = this.state;
+    const { processing, running, screen, answer } = this.state;
     return (
       <Container>
         <Header>Calculator</Header>
