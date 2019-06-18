@@ -52,12 +52,6 @@ class App extends React.Component {
           <Processing running={running} answer={answer} press={this.press} />
         ) : (
             <Keypad>
-              {/* <ButtonRow func={this.press} keys={['1', '2', '3']} />
-              <ButtonRow func={this.press} keys={['4', '5', '6']} />
-              <ButtonRow func={this.press} keys={['7', '8', '9']} />
-              <ButtonRow func={this.press} keys={['0', '+', '-']} />
-              <ButtonRow func={this.press} keys={['*', '/', '%']} />
-              <ButtonRow func={this.press} keys={['Clear', 'Go']} /> */}
               <ButtonRow func={this.press} keys={['Clear', '1', '2']} />
               <ButtonRow func={this.press} keys={['-', '3', '4']} />
               <ButtonRow func={this.press} keys={['*', '5', '6']} />
