@@ -5,6 +5,6 @@ export default (Header = styled.Text`
   font-size: 80px;
   font-family: Chathura-ExtraBold;
   background-color: rgb(29, 31, 33);
-  color: gold;
+  color: orange;
   text-align: center;
 `);

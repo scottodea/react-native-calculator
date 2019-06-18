@@ -7,7 +7,14 @@ const ButtonBox = styled.TouchableHighlight.attrs({
   flex: 1;
   align-items: center;
   justify-content: center;
-  background-color: rgb(39, 41, 43);
+  background-color: ${(props) => {
+
+    if (/\w/g.test(props.text)) {
+      return 'rgb(39, 41, 43)'
+    }
+    return 'orange'
+  }
+  }
   border-radius: 10px;
   margin: 5px;
 `;
@@ -15,11 +22,22 @@ const ButtonBox = styled.TouchableHighlight.attrs({
 const ButtonText = styled.Text`
   font-size: 30;
   font-family: Orbitron-Bold;
-  color: ${props => (props.text == "Go" ? "green" : "orange")};
-`;
+  color: ${(props) => {
+    if (props.text == 'Go') {
+      return 'green';
+    }
+    else if (props.text == 'Clear') {
+      return 'red';
+    }
+    else if (/\w/g.test(props.text)) {
+      return 'orange';
+    }
+    return 'black';
+  }
+  }`
 
 export default (Button = ({ func, text }) => (
-  <ButtonBox onPress={() => func(text)}>
+  <ButtonBox text={text} onPress={() => func(text)}>
     <ButtonText text={text}>{text}</ButtonText>
   </ButtonBox>
 ));

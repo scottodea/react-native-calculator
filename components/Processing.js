@@ -18,7 +18,7 @@ const Header = styled.Text`
   text-align: center;
   text-align-vertical: center;
   font-family: Orbitron-Bold;
-  color: red;
+  color: green;
   padding-top: 10px;
 `;
 
@@ -27,13 +27,12 @@ const Item = styled.Text`
   text-align: center;
   text-align-vertical: center;
   font-family: Audiowide-Regular;
-  color: firebrick;
+  color: green;
 `;
 
 export default ({ running, answer, press }) => (
   <ProcessingBox>
-    {running ? <Header>Processing</Header> : <Header>Finished</Header>}
-    {/* <List data={answer} renderItem={({ item }) => <Item>{item}</Item>} /> */}
+    {running ? <Header>Processing</Header> : <Header>Result</Header>}
     <Item>{answer}</Item>
     {!running && <Button func={() => press("Back")} text="Back" />}
   </ProcessingBox>

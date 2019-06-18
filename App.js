@@ -28,8 +28,7 @@ class App extends React.Component {
       this.setState({ numbers, running: false, processing: true, answer });
     } else if (value === 'Back') {
       this.setState({ screen: 0, numbers: [], string: '', processing: false, answer: null });
-    }
-    else if (value.includes('+') || value.includes('-') || value.includes('*') || value.includes('/')) {
+    } else if (value.includes('+') || value.includes('-') || value.includes('*') || value.includes('/')) {
       if (string) {
         return this.setState({ string: `${string} ${value}`, screen: 0 })
       }
@@ -47,16 +46,24 @@ class App extends React.Component {
     return (
       <Container>
         <Header>Calculator</Header>
-        <Input>{screen}</Input>
+
+        {answer ? <Input>{answer}</Input> : <Input>{screen}</Input>}
         {processing ? (
           <Processing running={running} answer={answer} press={this.press} />
         ) : (
             <Keypad>
-              <ButtonRow func={this.press} keys={['1', '2', '3']} />
+              {/* <ButtonRow func={this.press} keys={['1', '2', '3']} />
               <ButtonRow func={this.press} keys={['4', '5', '6']} />
               <ButtonRow func={this.press} keys={['7', '8', '9']} />
-              <ButtonRow func={this.press} keys={['0', 'Clear', 'Go']} />
-              <ButtonRow func={this.press} keys={['*', '+', '-']} />
+              <ButtonRow func={this.press} keys={['0', '+', '-']} />
+              <ButtonRow func={this.press} keys={['*', '/', '%']} />
+              <ButtonRow func={this.press} keys={['Clear', 'Go']} /> */}
+              <ButtonRow func={this.press} keys={['Clear', '1', '2']} />
+              <ButtonRow func={this.press} keys={['-', '3', '4']} />
+              <ButtonRow func={this.press} keys={['*', '5', '6']} />
+              <ButtonRow func={this.press} keys={['/', '7', '8']} />
+              <ButtonRow func={this.press} keys={['+', '9', '0']} />
+              <ButtonRow func={this.press} keys={['Go']} />
             </Keypad>
           )}
       </Container>

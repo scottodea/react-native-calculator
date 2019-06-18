@@ -6,6 +6,6 @@ export default (Input = styled.Text`
   font-family: Audiowide-Regular;
   text-align-vertical: center;
   font-size: 70;
-  color: firebrick;
-  background-color: gold;
+  color: black;
+  background-color: #F7682F;
 `);
