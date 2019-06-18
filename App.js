@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Container,
   Header,
@@ -6,73 +6,64 @@ import {
   Keypad,
   ButtonRow,
   Processing
-} from "./components";
+} from './components';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   state = {
-    number: 123456,
-    factors: [],
+    number: 0,
+    numbers: [],
     processing: false,
-    running: false
+    running: false,
+    operator: '',
+    screen: 0,
+    answer: null
   };
-  getPrimes = N => {
-    const factors = [];
-    let num = N;
-    while (num % 2 === 0) {
-      factors.push({ key: "2" });
-      num /= 2;
+
+  calculate = (operator, numbers) => {
+    numbers_to_i = numbers.map(num => +num)
+    let answer = numbers_to_i.reduce((acc, cv) => acc + cv);
+    return answer
+  }
+
+  press = (value) => {
+    let { numbers, screen, operator, answer } = this.state;
+    if (value === 'Clear') {
+      screen = 0;
+      this.setState({ screen });
+    } else if (value === 'Go' && operator !== '') {
+      numbers.push(screen);
+      this.setState({ running: false, processing: true, answer: this.calculate(operator, numbers) });
+    } else if (value === 'Back') {
+      this.setState({ screen: 0, numbers: [], answer: null, operator: '', processing: false });
     }
-    let i;
-    for (i = 3; i <= Math.floor(Math.sqrt(num)); i += 2) {
-      while (num % i === 0) {
-        factors.push({ key: `${i}` });
-        num /= i;
-      }
+    else if (value === '+') {
+      numbers.push(screen);
+      this.setState({ numbers, screen: 0, operator: '+' });
     }
-    if (num > 1) {
-      factors.push({ key: `${num}` });
-    }
-    return factors;
-  };
-  press = value => {
-    let { number } = this.state;
-    if (value === "Clear") {
-      number = Math.floor(number / 10);
-      this.setState({ number });
-    } else if (value !== "Go" && value !== "Back" && number < 1000000) {
-      if (number === 0) number = value;
-      else number += value;
-      this.setState({ number });
-    } else if (value === "Go") {
-      this.setState({ processing: true });
-      let factors = this.getPrimes(number);
-      this.setState({ running: false });
-      this.setState({ factors });
-    } else if (value === "Back") {
-      this.setState({ processing: false });
+    else {
+      if (screen === 0) screen = value;
+      else screen += value;
+      this.setState({ screen });
     }
   };
-  Z;
 
   render() {
-    const { number, processing, running, factors } = this.state;
+    const { processing, running, operator, screen, answer } = this.state;
     return (
       <Container>
         <Header>Calculator</Header>
-        <Input>{number}</Input>
+        <Input>{screen}</Input>
         {processing ? (
-          <Processing running={running} factors={factors} press={this.press} />
+          <Processing running={running} answer={answer} press={this.press} />
         ) : (
-          <Keypad>
-            <ButtonRow func={this.press} keys={["1", "2", "3"]} />
-            <ButtonRow func={this.press} keys={["4", "5", "6"]} />
-            <ButtonRow func={this.press} keys={["7", "8", "9"]} />
-            <ButtonRow func={this.press} keys={["0", "Clear", "Go"]} />
-          </Keypad>
-        )}
+            <Keypad>
+              <ButtonRow func={this.press} keys={['1', '2', '3']} />
+              <ButtonRow func={this.press} keys={['4', '5', '6']} />
+              <ButtonRow func={this.press} keys={['7', '8', '9']} />
+              <ButtonRow func={this.press} keys={['0', 'Clear', 'Go']} />
+              <ButtonRow func={this.press} keys={['*', '+', '-']} />
+            </Keypad>
+          )}
       </Container>
     );
   }

@@ -1,5 +1,4 @@
 import React from "react";
-import { FlatList } from "react-native";
 import styled from "styled-components/native";
 import { Button } from ".";
 
@@ -31,10 +30,11 @@ const Item = styled.Text`
   color: firebrick;
 `;
 
-export default ({ running, factors, press }) => (
+export default ({ running, answer, press }) => (
   <ProcessingBox>
     {running ? <Header>Processing</Header> : <Header>Finished</Header>}
-    <List data={factors} renderItem={({ item }) => <Item>{item.key}</Item>} />
+    {/* <List data={answer} renderItem={({ item }) => <Item>{item}</Item>} /> */}
+    <Item>{answer}</Item>
     {!running && <Button func={() => press("Back")} text="Back" />}
   </ProcessingBox>
 );
